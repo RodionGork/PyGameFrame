@@ -1,0 +1,62 @@
+
+<html>
+<head>
+    <title>PyChallenge</title>
+        <meta name="author" content="Rodion Gorkovenko">
+        <meta name="robots" content="index,follow">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" href="./bs/bootstrap.css"/>
+        <link rel="stylesheet" href="./bs/bootstrap-theme.css"/>
+        <link rel="stylesheet" href="./common.css"/>
+        <script src="./jquery.js"></script>
+        <script src="./bs/bootstrap.js"></script>
+        <script src="./ace/ace.js"></script>
+        <script src="./brython/brython.js"></script>
+</head>
+<body>
+
+<nav class="header navbar">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <li><a href="#">Challenge</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div id="upper-pane" class="row">
+        <div id="main-pane" class="row spacing-before">
+            <div id="code-pane" class="col-xs-6">
+                <div id="editor"></div>
+            </div>
+        </div>
+        <div>
+            <button class="btn" id="button-run">Run</button>
+        </div>
+    </div>
+</div>
+
+<script src="./runner.py" type="text/python"></script>
+
+<script>
+$(function() {
+    brEditor = ace.edit('editor');
+    brEditor.getSession().setMode("ace/mode/python");
+    brython(1);
+    $('#button-run').click(function(){
+        console.log('bzzz');
+        window.runner();
+    });
+});
+</script>
+
+<!--
+<div class="footer">
+    (c) 2013, Rodion Gorkovenko
+
+</div>
+-->
+</body>
+</html>
+
