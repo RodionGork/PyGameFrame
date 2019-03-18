@@ -43,10 +43,10 @@ def runner():
     ns = {'__name__':'__game__', 'setup':setup, 'done':done, '_time':_time,
         'input':_input, 'dbg':dbg}
     code = window.brEditor.getValue()
-    dbg('executing chars: ' + str(len(code)))
     try:
-        exec(code, ns)
-        dbg('done')
+        lc = {}
+        exec(code, ns, lc)
+        window.selfCheck(lc['count_win'])
     except Exception as e:
         dbg('exc')
         if not hasattr(e, 'result'):

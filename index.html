@@ -30,22 +30,54 @@
             <div id="code-pane" class="col-xs-6">
                 <div id="editor"></div>
             </div>
+            <div id="game-pane" class="col-xs-6">
+            </div>
         </div>
         <div>
-            <button class="btn" id="button-run">Run</button>
+            <button class="btn" id="button-test">Test</button>
+            <button class="btn" id="button-verify">Verify</button>
         </div>
     </div>
+</div>
+
+<div id="game-field" style="display:none">
+    <div>Bet: <input id="bet-value" type="text" size="5" value="10" style="text-align:center"/> $ &nbsp;
+        for the number <input id="dice-bet" type="text" size="3" value="1" style="text-align:center"/></div>
+    <span id="dice-0" style="font-size:300%">1</span>
+    <span id="dice-1" style="font-size:300%">1</span>
+    <span id="dice-2" style="font-size:300%">1</span>
+    <hr/>
+    <div>Your profit: <span id="profit">0</span></div>
 </div>
 
 <script src="./runner.py" type="text/python"></script>
 
 <script>
+function selfCheck(f) {
+    var bet = $('#bet-value').val() * 1;
+    var bd = $('#dice-bet').val() * 1;
+    var dice = [];
+    var m = 0;
+    for (var i = 0; i < 3; i++) {
+        var d = Math.floor(Math.random() * 6 + 1);
+        dice.push(d);
+        $('#dice-' + i).text(d);
+        m += (d == bd) ? 1 : 0;
+    }
+    console.log("expected: " + (m > 0 ? bet * m : -bet));
+    console.log("sfck: " + f(bet, bd, dice));
+}
+</script>
+
+<script>
 $(function() {
     brEditor = ace.edit('editor');
     brEditor.getSession().setMode("ace/mode/python");
+    $('#game-field').detach().appendTo('#game-pane').show();
+    brEditor.setValue('def count_win(money, target, dice):\n    return 0\n');
+    brEditor.getSelection().selectFileStart();
     brython(1);
-    $('#button-run').click(function(){
-        console.log('bzzz');
+    $('#button-test').click(function(){
         window.runner();
     });
 });
